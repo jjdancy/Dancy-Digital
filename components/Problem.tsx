@@ -113,12 +113,12 @@ export default function Problem() {
               <Frame
                 tag="Before"
                 caption="What customers found"
-                image="/portfolio/jc-junk-hauling-before.png"
+                image="/portfolio/jc-junk-hauling-before.jpg"
               />
               <Frame
                 tag="After"
                 caption="Three weeks later"
-                image="/portfolio/jc-junk-hauling-after.png"
+                image="/portfolio/jc-junk-hauling-after.jpg"
                 emphasis
               />
             </div>

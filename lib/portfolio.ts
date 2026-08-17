@@ -8,7 +8,7 @@ export type Project = {
   why: string;
   tags: string[];
   featured?: boolean;
-  /** Path under /public, e.g. "/portfolio/vynl.png". Falls back to a text placeholder if omitted. */
+  /** Path under /public, e.g. "/portfolio/vynl.jpg". Falls back to a text placeholder if omitted. */
   image?: string;
 };
 
@@ -25,7 +25,7 @@ export const projects: Project[] = [
     why: "This is our most complete build. If you want to see what's possible when a business needs more than a brochure site, this is it.",
     tags: ["Next.js", "Booking system", "E-commerce", "Waitlist"],
     featured: true,
-    image: "/portfolio/vynl.png",
+    image: "/portfolio/vynl.jpg",
   },
   {
     slug: "jc-junk-hauling",
@@ -38,7 +38,7 @@ export const projects: Project[] = [
       "A rebuild focused on one job: get the phone to ring. The quote form and phone number are visible without scrolling, the trust signals (licensed, insured, same-day service, serving the county since 2001) are up front, and the branding actually looks like a real business.",
     why: "The project that proved the model. Small budget, real business, a site that now does its job.",
     tags: ["Next.js", "Local SEO", "Lead generation"],
-    image: "/portfolio/jc-junk-hauling-after.png",
+    image: "/portfolio/jc-junk-hauling-after.jpg",
   },
   {
     slug: "pro-scout-australia",
@@ -51,7 +51,7 @@ export const projects: Project[] = [
       "A recruiting platform structured around athlete profiles and scouting workflows, built to handle real data, not just static pages.",
     why: "Proof we can build past the brochure site into something closer to a product.",
     tags: ["Next.js", "Platform", "Structured data"],
-    image: "/portfolio/pro-scout-australia.png",
+    image: "/portfolio/pro-scout-australia.jpg",
   },
   {
     slug: "lab-university-academy",
@@ -64,7 +64,7 @@ export const projects: Project[] = [
       "A clean, trustworthy site organized around admissions, academics, and campus life, built to answer a parent's questions before they have to email anyone.",
     why: "Schools can't afford to look unfinished. This one doesn't.",
     tags: ["Next.js", "Education", "Content structure"],
-    image: "/portfolio/lab-university-academy.png",
+    image: "/portfolio/lab-university-academy.jpg",
   },
   {
     slug: "flow-cooler",
@@ -77,6 +77,6 @@ export const projects: Project[] = [
       "A product-focused ecommerce site built to sell one thing well: clear photography, clear specs, a checkout that doesn't get in the way.",
     why: "Not every business needs a hundred pages. Sometimes it needs one page that sells.",
     tags: ["Next.js", "E-commerce", "Product page"],
-    image: "/portfolio/flow-cooler.png",
+    image: "/portfolio/flow-cooler.jpg",
   },
 ];
