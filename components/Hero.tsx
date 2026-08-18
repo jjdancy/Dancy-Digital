@@ -52,7 +52,7 @@ export default function Hero() {
           transition={{ duration: 0.5 }}
           className="text-sm font-medium text-accent mb-6"
         >
-          Wilson, NC &amp; Charlotte - working nationally
+          Based in Wilson, NC — serving clients nationwide
         </motion.p>
 
         <motion.h1
