@@ -45,6 +45,18 @@ const DRAG_SLOP = 6;
  * width through MAX_TILT works out near 40px at the largest card size.
  */
 const ARC_HEADROOM = 44;
+/**
+ * Curvature of the heading's arc, as the `a` in `y = a x²` with both axes in
+ * em, so the shape tracks the font size. Expressed as curvature rather than a
+ * fixed depth because the heading sets on one line at desktop widths and two
+ * on a phone: holding the depth constant would bend the short line far harder
+ * than the long one, where holding `a` makes every line a segment of the same
+ * curve. Tuned so the 36-character line dips 0.55em, matching the shallow
+ * valley the cards ride.
+ */
+const TEXT_CURVATURE = 0.0068;
+/** Rough advance width of one character, in em, for the Fraunces display face. */
+const CHAR_ADVANCE_EM = 0.5;
 
 /**
  * Card width for a given strip width. Sized so a bit over three cards span a
@@ -70,6 +82,76 @@ function arcPosition(index: number, offset: number, stripWidth: number) {
   const cardW = cardWidthFor(stripWidth);
   const centre = index * (cardW + GAP) + offset + cardW / 2;
   return clamp((centre - stripWidth / 2) / (stripWidth / 2), -1, 1);
+}
+
+/**
+ * One line of text set on the same parabola the cards ride: the middle sits
+ * lowest, the ends ride up, and each character rotates to the curve's tangent.
+ * `nowrap` because a line that wrapped would put half the arc on each row and
+ * read as two broken curves rather than one.
+ */
+function CurvedLine({ text }: { text: string }) {
+  const chars = Array.from(text);
+  const n = chars.length;
+  const halfWidth = (n * CHAR_ADVANCE_EM) / 2;
+  const depth = TEXT_CURVATURE * halfWidth * halfWidth;
+  // Tangent at the end of the parabola: the slope of `a x²` at x is `2 a x`.
+  const tilt = (Math.atan(2 * TEXT_CURVATURE * halfWidth) * 180) / Math.PI;
+
+  return (
+    <span
+      className="block whitespace-nowrap"
+      style={{ paddingBottom: `${depth.toFixed(4)}em` }}
+    >
+      {chars.map((ch, i) => {
+        const t = n === 1 ? 0 : (i / (n - 1)) * 2 - 1;
+        return (
+          <span
+            key={i}
+            className="inline-block"
+            style={{
+              transform: `translateY(${(depth * (1 - t * t)).toFixed(4)}em) rotate(${(-tilt * t).toFixed(3)}deg)`,
+            }}
+          >
+            {ch === " " ? "\u00A0" : ch}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
+/**
+ * The section heading, curved to match the strip below it.
+ *
+ * Two arrangements ship and CSS picks one: a phone gets the text broken over
+ * `lines` so it can stay legible, while anything wider sets it as a single
+ * arc. Fitting the whole sentence on one line at phone widths would drop it to
+ * about 17px, smaller than the card captions underneath it. Both arrangements
+ * are hidden from assistive tech, which takes the heading from `aria-label`
+ * rather than spelling out one span per character.
+ */
+function CurvedHeading({ text, lines }: { text: string; lines: string[] }) {
+  return (
+    <h2 aria-label={text} className="font-display tracking-tight">
+      <span
+        aria-hidden
+        className="block sm:hidden"
+        style={{ fontSize: "clamp(1.35rem, 6.4vw, 2rem)" }}
+      >
+        {lines.map((line) => (
+          <CurvedLine key={line} text={line} />
+        ))}
+      </span>
+      <span
+        aria-hidden
+        className="hidden sm:block"
+        style={{ fontSize: "clamp(1.6rem, 4.4vw, 2.75rem)" }}
+      >
+        <CurvedLine text={text} />
+      </span>
+    </h2>
+  );
 }
 
 function ArcCard({
@@ -245,11 +327,12 @@ export default function Portfolio() {
       className="py-24 sm:py-32 border-t border-border overflow-hidden"
     >
       <div className="mx-auto max-w-6xl px-6 sm:px-8">
-        <Reveal className="max-w-xl mb-16">
+        <Reveal className="mb-16 text-center">
           <p className="text-sm font-medium text-accent mb-4">The work</p>
-          <h2 className="font-display text-3xl sm:text-4xl tracking-tight">
-            Five sites. Five different problems.
-          </h2>
+          <CurvedHeading
+            text="Five sites. Five different problems."
+            lines={["Five sites.", "Five different problems."]}
+          />
         </Reveal>
       </div>
 
