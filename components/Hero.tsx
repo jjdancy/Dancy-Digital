@@ -88,14 +88,14 @@ export default function Hero() {
           >
             See our work
           </a>
-          <button
-            data-cal-namespace="intro-call"
-            data-cal-link="dancydigital/intro-call"
-            data-cal-config='{"layout":"month_view"}'
+          <a
+            href="https://cal.com/dancydigital/intro-call"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center rounded-full border border-border px-6 py-3 text-sm font-medium hover:border-foreground transition-colors"
           >
             Book a call
-          </button>
+          </a>
         </motion.div>
       </div>
     </section>

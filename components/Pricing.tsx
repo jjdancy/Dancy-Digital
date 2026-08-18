@@ -95,14 +95,14 @@ export default function Pricing() {
               Exact retainer cost depends on what the site needs. We&apos;ll
               give you a number, not a range, once we know your build.
             </p>
-            <button
-              data-cal-namespace="intro-call"
-              data-cal-link="dancydigital/intro-call"
-              data-cal-config='{"layout":"month_view"}'
+            <a
+              href="https://cal.com/dancydigital/intro-call"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-6 inline-flex items-center justify-center w-full rounded-full bg-accent text-accent-ink px-6 py-3 text-sm font-medium hover:bg-background hover:text-foreground transition-colors"
             >
               Book a call
-            </button>
+            </a>
           </motion.div>
         </div>
       </div>

@@ -6,12 +6,10 @@ import Portfolio from "@/components/Portfolio";
 import Pricing from "@/components/Pricing";
 import About from "@/components/About";
 import Footer from "@/components/Footer";
-import CalEmbed from "@/components/CalEmbed";
 
 export default function Home() {
   return (
     <div className="flex flex-col flex-1">
-      <CalEmbed />
       <Header />
       <main className="flex-1">
         <Hero />
