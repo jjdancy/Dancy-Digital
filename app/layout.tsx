@@ -16,10 +16,27 @@ const fraunces = Fraunces({
   axes: ["opsz", "SOFT", "WONK"],
 });
 
+const title = "Dancy Digital - Websites for small businesses that ship fast";
+const description =
+  "We design and build modern websites for small businesses. Two people, real client work, no template bloat. Based in Wilson, NC and Charlotte.";
+const siteUrl = "https://dancy-digital.vercel.app";
+
 export const metadata: Metadata = {
-  title: "Dancy Digital - Websites for small businesses that ship fast",
-  description:
-    "We design and build modern websites for small businesses. Two people, real client work, no template bloat. Based in Wilson, NC and Charlotte.",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: siteUrl,
+    siteName: "Dancy Digital",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
