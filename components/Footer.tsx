@@ -19,6 +19,9 @@ export default function Footer() {
           >
             (704) 579-0869
           </a>
+          <a href="/privacy" className="hover:text-foreground transition-colors">
+            Privacy
+          </a>
         </div>
       </div>
     </footer>
