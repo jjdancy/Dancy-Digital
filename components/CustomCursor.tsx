@@ -36,17 +36,25 @@ export default function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
 
   const [enabled, setEnabled] = useState(false);
+  const [reduced, setReduced] = useState(false);
   const [state, setState] = useState<CursorState>(DEFAULT_STATE);
   const [visible, setVisible] = useState(false);
   const [pressed, setPressed] = useState(false);
 
-  // Only run on devices with a real pointer, and only when the user hasn't
-  // asked for reduced motion. Checked after mount so the server-rendered
-  // markup is identical for every visitor.
+  // Runs on any device with a real pointer. Reduced motion does not disable
+  // the cursor: `prefers-reduced-motion` exists to prevent vestibular triggers
+  // (parallax, large unprompted slides, spin), and a marker that tracks the
+  // pointer the visitor is already moving isn't one. What it does remove is
+  // the easing — see `reduced` in the animation loop, where the dot and ring
+  // snap to the pointer instead of trailing it. Checked after mount so the
+  // server-rendered markup is identical for every visitor.
   useEffect(() => {
     const pointer = window.matchMedia("(pointer: fine)");
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setEnabled(pointer.matches && !motion.matches);
+    const sync = () => {
+      setEnabled(pointer.matches);
+      setReduced(motion.matches);
+    };
     sync();
     pointer.addEventListener("change", sync);
     motion.addEventListener("change", sync);
@@ -145,8 +153,10 @@ export default function CustomCursor() {
       // exponential decay over however long this frame actually took.
       const frames = Math.min((now - last) / BASE_FRAME_MS, 4);
       last = now;
-      const dotEase = 1 - Math.pow(1 - DOT_FOLLOW, frames);
-      const ringEase = 1 - Math.pow(1 - RING_FOLLOW, frames);
+      // Under reduced motion the cursor still renders, but nothing trails:
+      // an ease of 1 lands both layers on the pointer within the same frame.
+      const dotEase = reduced ? 1 : 1 - Math.pow(1 - DOT_FOLLOW, frames);
+      const ringEase = reduced ? 1 : 1 - Math.pow(1 - RING_FOLLOW, frames);
 
       let targetX = pointer.x;
       let targetY = pointer.y;
@@ -189,7 +199,7 @@ export default function CustomCursor() {
       document.removeEventListener("pointerleave", onLeave);
       document.removeEventListener("pointerenter", onEnter);
     };
-  }, [enabled]);
+  }, [enabled, reduced]);
 
   useEffect(() => {
     document.body.classList.toggle("lqd-cursor-active", enabled);
