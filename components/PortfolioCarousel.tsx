@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, type PanInfo } from "framer-motion";
+import { easing } from "@/lib/motion";
 import type { CarouselSlide } from "@/lib/carouselSlides";
 
 export type { CarouselSlide };
@@ -123,7 +124,7 @@ export default function PortfolioCarousel({
           variants={slideVariants}
           initial="initial"
           animate="animate"
-          transition={{ duration: reduceMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: reduceMotion ? 0 : 0.4, ease: easing.outQuint }}
           drag={count > 1 ? "x" : false}
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.15}
@@ -131,6 +132,7 @@ export default function PortfolioCarousel({
             dragActiveRef.current = true;
           }}
           onDragEnd={onDragEnd}
+          data-cursor={count > 1 ? "drag" : undefined}
           className="absolute inset-0 cursor-grab active:cursor-grabbing"
         >
           {slide.url ? (

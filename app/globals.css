@@ -24,6 +24,16 @@
   --font-display: var(--font-fraunces);
 }
 
+/* Motion tokens. `--ease-out-quint` is the reference site's curve; every
+   hover and reveal uses it so the whole page decelerates the same way. */
+:root {
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --dur-fast: 200ms;
+  --dur-base: 400ms;
+  --dur-slow: 700ms;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -35,6 +45,156 @@ body {
   color: var(--accent-ink);
 }
 
-html {
-  scroll-behavior: smooth;
+/* No `scroll-behavior: smooth` here: Lenis drives in-page scrolling and the
+   two fight each other. When Lenis is disabled (reduced motion) an instant
+   jump is the correct fallback anyway. */
+
+/* ---------------------------------------------------------------------------
+   Custom cursor
+   --------------------------------------------------------------------------- */
+
+/* Only hide the native cursor once the custom one is actually mounted, so a
+   touch device or reduced-motion visitor never loses their pointer. */
+body.lqd-cursor-active,
+body.lqd-cursor-active a,
+body.lqd-cursor-active button,
+body.lqd-cursor-active [role="button"],
+body.lqd-cursor-active label,
+body.lqd-cursor-active summary {
+  cursor: none;
+}
+
+/* Text inputs keep a real caret - losing it makes typing feel broken. */
+body.lqd-cursor-active input,
+body.lqd-cursor-active textarea,
+body.lqd-cursor-active select,
+body.lqd-cursor-active [contenteditable="true"] {
+  cursor: auto;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--accent);
+  transition: opacity var(--dur-fast) var(--ease-out-quint);
+}
+
+.cursor-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--accent);
+  /* Size, radius and colour are tweened by CSS; position and scale are driven
+     per-frame from JS, so the two never write the same property. */
+  transition:
+    width var(--dur-base) var(--ease-out-quint),
+    height var(--dur-base) var(--ease-out-quint),
+    border-radius var(--dur-base) var(--ease-out-quint),
+    background-color var(--dur-base) var(--ease-out-quint),
+    opacity var(--dur-fast) var(--ease-out-quint);
+}
+
+.cursor-ring[data-mode="stick"] {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.cursor-ring[data-mode="label"] {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.cursor-ring[data-pressed] {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.cursor-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+/* ---------------------------------------------------------------------------
+   Hover micro-interactions
+   --------------------------------------------------------------------------- */
+
+/* Lift a card slightly and deepen its border on hover. */
+.hover-lift {
+  transition:
+    transform var(--dur-base) var(--ease-out-quint),
+    box-shadow var(--dur-base) var(--ease-out-quint),
+    border-color var(--dur-base) var(--ease-out-quint);
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -24px rgb(20 18 15 / 0.28);
+    border-color: color-mix(in srgb, var(--foreground) 22%, transparent);
+  }
+}
+
+/* Zoom an image inside a fixed frame. Put this on the clipping wrapper. */
+.zoom-frame {
+  overflow: hidden;
+}
+
+.zoom-frame img {
+  transition: transform var(--dur-slow) var(--ease-out-quint);
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .zoom-frame:hover img,
+  .group:hover .zoom-frame img {
+    transform: scale(1.04);
+  }
+}
+
+/* Nudge a button on hover without shifting anything around it. */
+.hover-press {
+  transition: transform var(--dur-base) var(--ease-out-quint);
+}
+
+@media (hover: hover) {
+  .hover-press:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.hover-press:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hover-lift:hover,
+  .hover-press:hover,
+  .zoom-frame:hover img,
+  .group:hover .zoom-frame img {
+    transform: none;
+  }
 }

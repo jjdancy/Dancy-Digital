@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { STAGGER, duration, easing } from "@/lib/motion";
 
 const stages = [
   {
@@ -101,7 +102,7 @@ export default function Process() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: duration.base, ease: easing.outQuint }}
           className="max-w-xl mb-16"
         >
           <p className="text-sm font-medium text-accent mb-4">How we work</p>
@@ -119,7 +120,7 @@ export default function Process() {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
+                transition={{ duration: duration.base, delay: i * STAGGER, ease: easing.outQuint }}
                 className="relative grid sm:grid-cols-[40px_1fr_1fr] gap-6 sm:gap-10 items-start"
               >
                 <div className="hidden sm:flex h-10 w-10 rounded-full bg-background border border-border items-center justify-center text-xs font-mono text-foreground/60 relative z-10">
@@ -146,7 +147,7 @@ export default function Process() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: duration.base, ease: easing.outQuint }}
           className="mt-16 sm:mt-20 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pl-0 sm:pl-[64px]"
         >
           <p className="text-foreground/70">

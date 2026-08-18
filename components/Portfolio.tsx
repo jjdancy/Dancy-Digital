@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { projects, type Project } from "@/lib/portfolio";
+import { STAGGER, duration, easing } from "@/lib/motion";
 
 function BrowserFrame({
   url,
@@ -30,7 +31,7 @@ function BrowserFrame({
         </span>
       </div>
       <div
-        className={`relative aspect-[16/10] flex items-center justify-center overflow-hidden ${
+        className={`zoom-frame relative aspect-[16/10] flex items-center justify-center overflow-hidden ${
           accent ? "bg-accent/[0.07]" : "bg-foreground/[0.04]"
         }`}
       >
@@ -128,6 +129,7 @@ function FeaturedCard({ project }: { project: Project }) {
         href={project.url}
         target="_blank"
         rel="noopener noreferrer"
+        data-cursor="view"
         className="inline-flex items-center gap-2 text-sm font-medium hover:gap-3 transition-all"
       >
         Visit {display}
@@ -141,8 +143,8 @@ function FeaturedCard({ project }: { project: Project }) {
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6 }}
-      className="rounded-2xl border border-accent/20 bg-accent/[0.03] p-6 sm:p-10 mb-8"
+      transition={{ duration: duration.base, ease: easing.outQuint }}
+      className="hover-lift group rounded-2xl border border-accent/20 bg-accent/[0.03] p-6 sm:p-10 mb-8"
     >
       {/* Mobile: name, image, toggle, collapsible details */}
       <div className="lg:hidden">
@@ -196,6 +198,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         href={project.url}
         target="_blank"
         rel="noopener noreferrer"
+        data-cursor="view"
         className="inline-flex items-center gap-2 text-sm font-medium hover:gap-3 transition-all"
       >
         Visit site
@@ -209,8 +212,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="rounded-2xl border border-border p-6 sm:p-8"
+      transition={{ duration: duration.base, delay: index * STAGGER, ease: easing.outQuint }}
+      className="hover-lift group rounded-2xl border border-border p-6 sm:p-8"
     >
       {/* Mobile: name, image, toggle, collapsible details */}
       <div className="md:hidden">
@@ -252,7 +255,7 @@ export default function Portfolio() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: duration.base, ease: easing.outQuint }}
           className="max-w-xl mb-16"
         >
           <p className="text-sm font-medium text-accent mb-4">The work</p>

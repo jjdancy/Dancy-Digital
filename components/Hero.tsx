@@ -1,10 +1,27 @@
 "use client";
 
 import { useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { easing } from "@/lib/motion";
+
+/** Entrance timing: each element starts a beat after the one above it. */
+const enter = (delay: number) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.9, delay, ease: easing.outQuint },
+});
 
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  // Background drifts slower than the page, foreground copy lifts away.
+  const gridY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     const el = ref.current;
@@ -29,9 +46,10 @@ export default function Hero() {
         } as React.CSSProperties
       }
     >
-      <div
+      <motion.div
         className="pointer-events-none absolute inset-0 opacity-70"
         style={{
+          y: gridY,
           backgroundImage:
             "radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0)",
           backgroundSize: "28px 28px",
@@ -45,20 +63,16 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative mx-auto max-w-6xl px-6 sm:px-8">
-        <motion.p
-          initial={{ opacity: 1, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-sm font-medium text-accent mb-6"
-        >
+      <motion.div
+        style={{ y: contentY, opacity: contentOpacity }}
+        className="relative mx-auto max-w-6xl px-6 sm:px-8"
+      >
+        <motion.p {...enter(0)} className="text-sm font-medium text-accent mb-6">
           Based in Wilson, NC, serving clients nationwide
         </motion.p>
 
         <motion.h1
-          initial={{ opacity: 1, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.05 }}
+          {...enter(0.08)}
           className="font-display text-[2.75rem] leading-[1.05] sm:text-6xl sm:leading-[1.05] lg:text-7xl lg:leading-[1.02] max-w-4xl tracking-tight"
         >
           We build websites that get small businesses{" "}
@@ -66,9 +80,7 @@ export default function Hero() {
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 1, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
+          {...enter(0.18)}
           className="mt-8 max-w-xl text-lg text-foreground/70 leading-relaxed"
         >
           Two people. Real client work. We use AI to move faster on design
@@ -76,15 +88,10 @@ export default function Hero() {
           cutting the corners that make it look cheap.
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 1, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.25 }}
-          className="mt-10 flex flex-wrap items-center gap-4"
-        >
+        <motion.div {...enter(0.28)} className="mt-10 flex flex-wrap items-center gap-4">
           <a
             href="#work"
-            className="inline-flex items-center rounded-full bg-foreground text-background px-6 py-3 text-sm font-medium hover:bg-accent hover:text-accent-ink transition-colors"
+            className="hover-press inline-flex items-center rounded-full bg-foreground text-background px-6 py-3 text-sm font-medium hover:bg-accent hover:text-accent-ink transition-colors"
           >
             See our work
           </a>
@@ -92,12 +99,12 @@ export default function Hero() {
             href="https://cal.com/dancydigital/intro-call"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center rounded-full border border-border px-6 py-3 text-sm font-medium hover:border-foreground transition-colors"
+            className="hover-press inline-flex items-center rounded-full border border-border px-6 py-3 text-sm font-medium hover:border-foreground transition-colors"
           >
             Book a call
           </a>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }
