@@ -11,10 +11,13 @@ function BrowserFrame({
   url,
   image,
   accent = false,
+  wide = false,
 }: {
   url: string;
   image?: string;
   accent?: boolean;
+  /** Letterboxes the shot for the featured card, where it runs full width. */
+  wide?: boolean;
 }) {
   const display = url.replace(/^https?:\/\//, "");
   return (
@@ -32,9 +35,9 @@ function BrowserFrame({
         </span>
       </div>
       <div
-        className={`zoom-frame relative aspect-[16/10] flex items-center justify-center overflow-hidden ${
-          accent ? "bg-accent/[0.07]" : "bg-foreground/[0.04]"
-        }`}
+        className={`zoom-frame relative flex items-center justify-center overflow-hidden ${
+          wide ? "aspect-[16/10] lg:aspect-[21/9]" : "aspect-[16/10]"
+        } ${accent ? "bg-accent/[0.07]" : "bg-foreground/[0.04]"}`}
       >
         {image ? (
           <Image
@@ -42,7 +45,11 @@ function BrowserFrame({
             alt={`Screenshot of ${display}`}
             fill
             className="object-cover object-top"
-            sizes="(min-width: 1024px) 480px, 100vw"
+            sizes={
+              wide
+                ? "(min-width: 1024px) 1100px, 100vw"
+                : "(min-width: 1024px) 480px, 100vw"
+            }
           />
         ) : (
           <span className="font-display text-2xl text-foreground/25 italic">
@@ -57,26 +64,40 @@ function BrowserFrame({
 function ProjectVisual({
   project,
   accent = false,
+  wide = false,
 }: {
   project: Project;
   accent?: boolean;
+  wide?: boolean;
 }) {
-  return <BrowserFrame url={project.url} image={project.image} accent={accent} />;
+  return (
+    <BrowserFrame
+      url={project.url}
+      image={project.image}
+      accent={accent}
+      wide={wide}
+    />
+  );
 }
 
 function DetailsToggle({
   open,
   onClick,
+  onDark = false,
 }: {
   open: boolean;
   onClick: () => void;
+  /** Inverts the label for the featured card, which sits on a dark surface. */
+  onDark?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-expanded={open}
-      className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground/70"
+      className={`mt-4 inline-flex items-center gap-1.5 text-sm font-medium ${
+        onDark ? "text-background/70" : "text-foreground/70"
+      }`}
     >
       {open ? "Hide details" : "See the details"}
       <span
@@ -113,14 +134,14 @@ function FeaturedCard({ project }: { project: Project }) {
 
   const details = (
     <>
-      <p className="text-foreground/75 leading-relaxed mb-4">{project.problem}</p>
-      <p className="text-foreground/75 leading-relaxed mb-4">{project.build}</p>
-      <p className="text-foreground font-medium mb-6">{project.why}</p>
+      <p className="text-background/75 leading-relaxed mb-4">{project.problem}</p>
+      <p className="text-background/75 leading-relaxed mb-4">{project.build}</p>
+      <p className="text-background font-medium mb-6">{project.why}</p>
       <div className="flex flex-wrap gap-2 mb-6">
         {project.tags.map((t) => (
           <span
             key={t}
-            className="text-xs font-mono px-2.5 py-1 rounded-full border border-border text-foreground/60"
+            className="text-xs font-mono px-2.5 py-1 rounded-full border border-background/20 text-background/70"
           >
             {t}
           </span>
@@ -136,7 +157,7 @@ function FeaturedCard({ project }: { project: Project }) {
       <Link
         href={`/work/${project.slug}`}
         data-cursor="view"
-        className="hover-press inline-flex items-center gap-2 rounded-full bg-foreground text-background px-5 py-2.5 text-sm font-medium hover:bg-accent hover:text-accent-ink transition-colors"
+        className="hover-press inline-flex items-center gap-2 rounded-full bg-background text-foreground px-5 py-2.5 text-sm font-medium hover:bg-accent hover:text-accent-ink transition-colors"
       >
         Read the case study
         <span aria-hidden>→</span>
@@ -145,7 +166,7 @@ function FeaturedCard({ project }: { project: Project }) {
         href={project.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 text-sm font-medium hover:gap-3 transition-all"
+        className="inline-flex items-center gap-2 text-sm font-medium text-background hover:gap-3 transition-all"
       >
         Visit {display}
         <span aria-hidden>↗</span>
@@ -159,29 +180,66 @@ function FeaturedCard({ project }: { project: Project }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: duration.base, ease: easing.outQuint }}
-      className="hover-lift group rounded-2xl border border-accent/20 bg-accent/[0.03] p-6 sm:p-10 mb-8"
+      // Inverted to the dark surface so the featured build reads as a
+      // different kind of thing from the list below it, rather than the same
+      // card with a slightly warmer tint.
+      className="hover-lift group rounded-2xl bg-surface-dark p-6 sm:p-10 mb-8"
     >
       {/* Mobile: name, image, toggle, collapsible details */}
       <div className="lg:hidden">
         <p className="text-xs font-mono text-accent mb-3">Featured build</p>
-        <h3 className="font-display text-3xl mb-2 tracking-tight">{project.name}</h3>
-        <p className="text-sm text-foreground/50 mb-6">{project.industry}</p>
+        <h3 className="font-display text-3xl mb-2 tracking-tight text-background">
+          {project.name}
+        </h3>
+        <p className="text-sm text-background/50 mb-6">{project.industry}</p>
         <ProjectVisual project={project} accent />
-        <DetailsToggle open={open} onClick={() => setOpen((v) => !v)} />
+        <DetailsToggle open={open} onClick={() => setOpen((v) => !v)} onDark />
         <Collapsible open={open}>{details}</Collapsible>
         <div className="mt-6">{actions}</div>
       </div>
 
-      {/* Desktop: side by side, always expanded */}
-      <div className="hidden lg:grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <p className="text-xs font-mono text-accent mb-3">Featured build</p>
-          <h3 className="font-display text-4xl mb-2 tracking-tight">{project.name}</h3>
-          <p className="text-sm text-foreground/50 mb-6">{project.industry}</p>
-          {details}
-          {actions}
+      {/*
+        Desktop: a masthead, then the shot full width, then the story in two
+        columns underneath. The list cards below all run text beside a small
+        screenshot, so the featured build deliberately does not — the point is
+        that it reads as a different kind of entry, not a recoloured one.
+      */}
+      <div className="hidden lg:block">
+        <div className="flex items-end justify-between gap-8 mb-8">
+          <div>
+            <p className="text-xs font-mono text-accent mb-3">Featured build</p>
+            <h3 className="font-display text-5xl tracking-tight text-background">
+              {project.name}
+            </h3>
+          </div>
+          <p className="text-sm text-background/50 shrink-0 pb-2">
+            {project.industry}
+          </p>
         </div>
-        <ProjectVisual project={project} accent />
+
+        <ProjectVisual project={project} accent wide />
+
+        <div className="grid grid-cols-2 gap-12 mt-10">
+          <p className="text-background/75 leading-relaxed">{project.problem}</p>
+          <p className="text-background/75 leading-relaxed">{project.build}</p>
+        </div>
+
+        <p className="font-display text-2xl leading-relaxed text-background mt-10 max-w-3xl">
+          {project.why}
+        </p>
+
+        <div className="flex flex-wrap gap-2 mt-8">
+          {project.tags.map((t) => (
+            <span
+              key={t}
+              className="text-xs font-mono px-2.5 py-1 rounded-full border border-background/20 text-background/70"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-8">{actions}</div>
       </div>
     </motion.div>
   );

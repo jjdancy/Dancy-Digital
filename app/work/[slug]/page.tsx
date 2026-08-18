@@ -137,6 +137,12 @@ export default async function CaseStudyPage({
 
               <div className="max-w-2xl">
                 <Reveal>
+                  <p className="font-display text-xl sm:text-2xl leading-relaxed text-foreground/90">
+                    {project.overview}
+                  </p>
+                </Reveal>
+
+                <Reveal delay={0.05} className="mt-14">
                   <h2 className="font-display text-2xl sm:text-3xl tracking-tight mb-4">
                     The problem
                   </h2>
@@ -145,12 +151,36 @@ export default async function CaseStudyPage({
                   </p>
                 </Reveal>
 
-                <Reveal delay={0.05} className="mt-14">
+                <Reveal delay={0.1} className="mt-14">
                   <h2 className="font-display text-2xl sm:text-3xl tracking-tight mb-4">
                     What we built
                   </h2>
                   <p className="text-lg text-foreground/75 leading-relaxed">
                     {project.build}
+                  </p>
+                </Reveal>
+
+                <Reveal delay={0.1} className="mt-10">
+                  <dl className="divide-y divide-border border-y border-border">
+                    {project.features.map((f) => (
+                      <div key={f.title} className="py-6">
+                        <dt className="font-display text-lg tracking-tight mb-2">
+                          {f.title}
+                        </dt>
+                        <dd className="text-foreground/70 leading-relaxed">
+                          {f.body}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </Reveal>
+
+                <Reveal delay={0.05} className="mt-14">
+                  <h2 className="font-display text-2xl sm:text-3xl tracking-tight mb-4">
+                    Where it landed
+                  </h2>
+                  <p className="text-lg text-foreground/75 leading-relaxed">
+                    {project.outcome}
                   </p>
                 </Reveal>
 
