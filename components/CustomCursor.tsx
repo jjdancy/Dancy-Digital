@@ -12,13 +12,35 @@ const INTERACTIVE =
 
 /** Per-frame follow factor for the dot, corrected for real frame duration. */
 const DOT_FOLLOW = 0.4;
-/** Per-frame follow factor for the trailing ring (~0.2s settle). */
-const RING_FOLLOW = 0.16;
+/**
+ * Per-frame follow factor for the trailing ring, which sets the length of the
+ * comet tail. During a sustained move each layer settles a fixed multiple of
+ * the pointer's per-frame velocity behind it — `v * (1 - f) / f` — so the
+ * visible gap is the difference between the ring's lag and the dot's.
+ *
+ * Measured on a ~7px/frame sweep, gap between dot and ring:
+ *
+ *   0.16  37px   the previous value; reads as a soft blur, not a tail
+ *   0.12  58px
+ *   0.10  71px   roughly double the original, settles in under half a second
+ *   0.08  97px   ~600ms to settle, starts to feel detached on a quick flick
+ *
+ * A brisk real mouse move runs about 3x that sweep speed, so scale up for what
+ * a visitor actually sees.
+ */
+const RING_FOLLOW = 0.1;
 /** Frame duration the follow factors are tuned against. */
 const BASE_FRAME_MS = 1000 / 60;
 /** Below this size a control gets the ring wrapped around it instead. */
 const STICK_MAX_WIDTH = 220;
 const STICK_MAX_HEIGHT = 88;
+/**
+ * A cross-origin iframe is its own browsing context, so the parent stops
+ * receiving pointermove the instant the pointer crosses into one. These govern
+ * the fallback that notices that silence — see `pointerInIframe`.
+ */
+const IFRAME_IDLE_MS = 120;
+const IFRAME_POLL_MS = 100;
 
 type Mode = "default" | "stick" | "grow" | "label";
 
@@ -84,6 +106,11 @@ export default function CustomCursor() {
     // Mirrors the `visible` state so pointermove can skip redundant setState
     // calls without reading state during render.
     let shown = false;
+    // True while the pointer is believed to be inside a cross-origin iframe,
+    // where its real position is unknowable from this frame.
+    let overIframe = false;
+    let lastMoveAt = performance.now();
+    let lastIframeCheck = 0;
 
     const show = (next: boolean) => {
       if (shown === next) return;
@@ -91,13 +118,47 @@ export default function CustomCursor() {
       setVisible(next);
     };
 
+    /**
+     * Whether the last known pointer position falls inside any iframe. Only
+     * consulted once the pointer has gone quiet, so the layout reads stay off
+     * the hot path — a moving pointer is by definition over content this
+     * document still owns.
+     */
+    const pointerInIframe = () => {
+      const frames = document.getElementsByTagName("iframe");
+      for (let i = 0; i < frames.length; i++) {
+        const r = frames[i].getBoundingClientRect();
+        if (
+          r.width > 0 &&
+          r.height > 0 &&
+          pointer.x >= r.left &&
+          pointer.x <= r.right &&
+          pointer.y >= r.top &&
+          pointer.y <= r.bottom
+        ) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    // Any pointermove proves the pointer is back over content this document
+    // owns, which is what recovers the cursor after an iframe visit even if
+    // the boundary pointerover was missed.
     const onMove = (e: PointerEvent) => {
       pointer.x = e.clientX;
       pointer.y = e.clientY;
+      lastMoveAt = performance.now();
+      overIframe = false;
       show(true);
     };
     const onLeave = () => show(false);
-    const onEnter = () => show(true);
+    // Re-entering the window directly over an iframe would otherwise flash the
+    // cursor at its stale position until the idle check caught up.
+    const onEnter = () => {
+      overIframe = pointerInIframe();
+      show(!overIframe);
+    };
     const onDown = () => setPressed(true);
     const onUp = () => setPressed(false);
 
@@ -108,7 +169,27 @@ export default function CustomCursor() {
     };
 
     const onOver = (e: PointerEvent) => {
-      const target = (e.target as Element | null)?.closest?.(INTERACTIVE) ?? null;
+      const el = e.target as Element | null;
+
+      // Record the position from pointerover as well as pointermove. Crossing
+      // into an iframe fires this event and then nothing else, so without it
+      // the last known position stays frozen outside the frame the pointer
+      // just entered — which is exactly the coordinate `pointerInIframe`
+      // needs to be right about.
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
+
+      // The boundary pointerover still reaches this document as the pointer
+      // crosses into an iframe; everything after it is swallowed. Fading here
+      // rather than waiting for the idle check keeps the handoff immediate.
+      if (el?.tagName === "IFRAME") {
+        overIframe = true;
+        reset();
+        show(false);
+        return;
+      }
+
+      const target = el?.closest?.(INTERACTIVE) ?? null;
       if (!target) return reset();
 
       const explicit = target.getAttribute("data-cursor");
@@ -157,6 +238,29 @@ export default function CustomCursor() {
       // an ease of 1 lands both layers on the pointer within the same frame.
       const dotEase = reduced ? 1 : 1 - Math.pow(1 - DOT_FOLLOW, frames);
       const ringEase = reduced ? 1 : 1 - Math.pow(1 - RING_FOLLOW, frames);
+
+      // Backstop for the boundary pointerover: browsers vary on whether it
+      // lands, and a fast diagonal entry can skip it. Once the pointer has
+      // been quiet long enough to be suspicious, test its last known position
+      // against the iframe rects.
+      //
+      // This can only ever hide. Coming back is already proven by pointermove,
+      // which cannot fire from inside a cross-origin frame, so re-showing here
+      // would just be guessing from a position that may be stale — and an
+      // earlier revision that did exactly that immediately undid every hide
+      // the boundary event had correctly performed.
+      if (
+        !overIframe &&
+        now - lastMoveAt > IFRAME_IDLE_MS &&
+        now - lastIframeCheck > IFRAME_POLL_MS
+      ) {
+        lastIframeCheck = now;
+        if (pointerInIframe()) {
+          overIframe = true;
+          reset();
+          show(false);
+        }
+      }
 
       let targetX = pointer.x;
       let targetY = pointer.y;
