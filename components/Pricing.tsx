@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import BookingCalendar from "./BookingCalendar";
 
 const factors = [
   { label: "Simple site", detail: "5-7 pages, no booking or store", range: "$800-1,400" },
@@ -105,6 +106,22 @@ export default function Pricing() {
             </a>
           </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6 }}
+          className="mt-16"
+        >
+          <p className="text-sm font-medium text-accent mb-3">Pick a time</p>
+          <h3 className="font-display text-2xl tracking-tight mb-6">
+            No form, no back and forth. Grab a slot that works for you.
+          </h3>
+          <div className="rounded-2xl border border-border overflow-hidden h-[650px]">
+            <BookingCalendar />
+          </div>
+        </motion.div>
       </div>
     </section>
   );
