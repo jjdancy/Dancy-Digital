@@ -52,7 +52,7 @@ export default function Hero() {
           transition={{ duration: 0.5 }}
           className="text-sm font-medium text-accent mb-6"
         >
-          Based in Wilson, NC — serving clients nationwide
+          Based in Wilson, NC, serving clients nationwide
         </motion.p>
 
         <motion.h1
@@ -88,12 +88,14 @@ export default function Hero() {
           >
             See our work
           </a>
-          <a
-            href="#contact"
+          <button
+            data-cal-namespace="intro-call"
+            data-cal-link="dancydigital/intro-call"
+            data-cal-config='{"layout":"month_view"}'
             className="inline-flex items-center rounded-full border border-border px-6 py-3 text-sm font-medium hover:border-foreground transition-colors"
           >
-            Let&apos;s talk
-          </a>
+            Book a call
+          </button>
         </motion.div>
       </div>
     </section>

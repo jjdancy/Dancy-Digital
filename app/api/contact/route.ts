@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     // exactly the bug this route used to have (submissions only logged,
     // never delivered). See README for setup.
     console.error(
-      "RESEND_API_KEY is not set — contact form submissions are not being emailed anywhere.",
+      "RESEND_API_KEY is not set, contact form submissions are not being emailed anywhere.",
     );
     return NextResponse.json(
       { error: "Email delivery isn't configured yet. Please email us directly instead." },
