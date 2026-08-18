@@ -66,10 +66,10 @@ export default function PrivacyPage() {
                 If you want your info deleted or have any questions about
                 this, email{" "}
                 <a
-                  href="mailto:jjdancy0@gmail.com"
+                  href="mailto:contact@dancydigital.com"
                   className="text-foreground underline hover:text-accent transition-colors"
                 >
-                  jjdancy0@gmail.com
+                  contact@dancydigital.com
                 </a>{" "}
                 and we&apos;ll sort it out.
               </p>

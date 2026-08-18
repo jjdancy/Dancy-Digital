@@ -8,10 +8,10 @@ export default function Footer() {
         <p>Wilson, NC &amp; Charlotte - {new Date().getFullYear()}</p>
         <div className="flex items-center gap-4">
           <a
-            href="mailto:jjdancy0@gmail.com"
+            href="mailto:contact@dancydigital.com"
             className="hover:text-foreground transition-colors"
           >
-            jjdancy0@gmail.com
+            contact@dancydigital.com
           </a>
           <a
             href="tel:+17045790869"

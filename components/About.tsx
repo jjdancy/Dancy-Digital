@@ -53,10 +53,10 @@ export default function About() {
             <p className="text-foreground/60 mb-8">
               Or reach us directly at{" "}
               <a
-                href="mailto:jjdancy0@gmail.com"
+                href="mailto:contact@dancydigital.com"
                 className="text-foreground underline underline-offset-4 decoration-border hover:decoration-accent"
               >
-                jjdancy0@gmail.com
+                contact@dancydigital.com
               </a>{" "}
               or{" "}
               <a

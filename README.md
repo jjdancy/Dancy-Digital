@@ -41,7 +41,7 @@ These are intentionally left as visible placeholders so they're impossible to mi
 - **Founder names and bios** - `components/About.tsx`, the `founders` array. Currently `[Founder One name]` / `[Founder Two name]` with bracketed bio placeholders.
 - **Contact form delivery** - `app/api/contact/route.ts` currently only logs submissions to the server console. Wire it to an email provider (e.g. Resend, Postmark) before relying on it for real leads.
 
-Contact email (`jjdancy0@gmail.com`) and phone ((704) 579-0869) are already live in `components/About.tsx` and `components/Footer.tsx`.
+Contact email (`contact@dancydigital.com`) and phone ((704) 579-0869) are already live in `components/About.tsx` and `components/Footer.tsx`.
 
 ## Portfolio data
 
