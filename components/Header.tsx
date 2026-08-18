@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 const links = [
-  { href: "#work", label: "Work" },
-  { href: "#process", label: "Process" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#work", label: "Work" },
+  { href: "/#process", label: "Process" },
+  { href: "/#pricing", label: "Pricing" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export default function Header() {
@@ -29,7 +29,7 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto max-w-6xl px-6 sm:px-8 flex items-center justify-between h-16">
-        <a href="#top" className="font-display text-lg tracking-tight">
+        <a href="/" className="font-display text-lg tracking-tight">
           Dancy<span className="text-accent">.</span>Digital
         </a>
 
@@ -46,7 +46,7 @@ export default function Header() {
         </nav>
 
         <a
-          href="#contact"
+          href="/#contact"
           className="hidden md:inline-flex items-center rounded-full bg-foreground text-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-ink transition-colors"
         >
           Let&apos;s talk
@@ -81,7 +81,7 @@ export default function Header() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/#contact"
             onClick={() => setOpen(false)}
             className="inline-flex items-center justify-center rounded-full bg-foreground text-background px-4 py-2 text-sm font-medium"
           >
