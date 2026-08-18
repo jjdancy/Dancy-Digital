@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { STAGGER, duration, easing } from "@/lib/motion";
 import BookingCalendar from "./BookingCalendar";
 
 const factors = [
@@ -26,7 +27,7 @@ export default function Pricing() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: duration.base, ease: easing.outQuint }}
               className="max-w-xl mb-16"
             >
               <p className="text-sm font-medium text-accent mb-4">Pricing</p>
@@ -39,7 +40,7 @@ export default function Pricing() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: duration.base, ease: easing.outQuint }}
             >
               <p className="font-display text-5xl sm:text-6xl tracking-tight mb-2">
                 $800<span className="text-foreground/40 mx-2">-</span>$2,800
@@ -55,7 +56,7 @@ export default function Pricing() {
                     initial={{ opacity: 0, x: -12 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-80px" }}
-                    transition={{ duration: 0.4, delay: i * 0.08 }}
+                    transition={{ duration: duration.base, delay: i * STAGGER, ease: easing.outQuint }}
                     className="flex items-center justify-between gap-6 py-5"
                   >
                     <div>
@@ -75,7 +76,7 @@ export default function Pricing() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: duration.base, delay: 0.1, ease: easing.outQuint }}
             className="rounded-2xl bg-surface-dark text-background p-8 sm:p-10"
           >
             <p className="text-sm font-medium text-accent mb-3">
@@ -100,7 +101,7 @@ export default function Pricing() {
               href="https://cal.com/dancydigital/intro-call"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center justify-center w-full rounded-full bg-accent text-accent-ink px-6 py-3 text-sm font-medium hover:bg-background hover:text-foreground transition-colors"
+              className="hover-press mt-6 inline-flex items-center justify-center w-full rounded-full bg-accent text-accent-ink px-6 py-3 text-sm font-medium hover:bg-background hover:text-foreground transition-colors"
             >
               Book a call
             </a>
@@ -111,7 +112,7 @@ export default function Pricing() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: duration.base, ease: easing.outQuint }}
           className="mt-16"
         >
           <p className="text-sm font-medium text-accent mb-3">Pick a time</p>

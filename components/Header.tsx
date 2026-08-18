@@ -47,7 +47,7 @@ export default function Header() {
 
         <a
           href="/#contact"
-          className="hidden md:inline-flex items-center rounded-full bg-foreground text-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-ink transition-colors"
+          className="hover-press hidden md:inline-flex items-center rounded-full bg-foreground text-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-ink transition-colors"
         >
           Let&apos;s talk
         </a>

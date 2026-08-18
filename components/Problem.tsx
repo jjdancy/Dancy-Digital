@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { duration, easing } from "@/lib/motion";
 
 function Frame({
   tag,
@@ -39,7 +40,7 @@ function Frame({
             jcjunkhauling.com
           </span>
         </div>
-        <div className="relative aspect-[21/10]">
+        <div className="zoom-frame relative aspect-[21/10]">
           <Image
             src={image}
             alt={`JC Junk Hauling, ${tag.toLowerCase()}`}
@@ -62,7 +63,7 @@ export default function Problem() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: duration.base, ease: easing.outQuint }}
           >
             <p className="text-sm font-medium text-accent mb-4">
               The problem
@@ -93,6 +94,7 @@ export default function Problem() {
               <a
                 href="#work"
                 className="inline-flex items-center gap-2 text-sm font-medium text-background hover:gap-3 hover:text-accent transition-all"
+                data-cursor="see work"
               >
                 See how we&apos;ve fixed this for other businesses
                 <span aria-hidden>→</span>
@@ -104,7 +106,7 @@ export default function Problem() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+            transition={{ duration: duration.base, delay: 0.15, ease: easing.outQuint }}
           >
             <p className="text-sm text-background/50 mb-4">
               JC Junk Hauling, real example

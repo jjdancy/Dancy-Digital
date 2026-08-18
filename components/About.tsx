@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { duration, easing } from "@/lib/motion";
 import ContactForm from "./ContactForm";
 
 export default function About() {
@@ -12,7 +13,7 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: duration.base, ease: easing.outQuint }}
           >
             <p className="text-sm font-medium text-accent mb-4">Who we are</p>
             <h2 className="font-display text-3xl sm:text-4xl tracking-tight mb-8">
@@ -44,7 +45,7 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: duration.base, delay: 0.1, ease: easing.outQuint }}
           >
             <p className="text-sm font-medium text-accent mb-4">Get in touch</p>
             <h3 className="font-display text-2xl tracking-tight mb-2">
