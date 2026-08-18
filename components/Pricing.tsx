@@ -19,54 +19,56 @@ export default function Pricing() {
   return (
     <section id="pricing" className="py-24 sm:py-32 border-t border-border">
       <div className="mx-auto max-w-6xl px-6 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="max-w-xl mb-16"
-        >
-          <p className="text-sm font-medium text-accent mb-4">Pricing</p>
-          <h2 className="font-display text-3xl sm:text-4xl tracking-tight">
-            What it actually costs.
-          </h2>
-        </motion.div>
-
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-16 lg:gap-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="font-display text-5xl sm:text-6xl tracking-tight mb-2">
-              $800<span className="text-foreground/40 mx-2">-</span>$2,800
-            </p>
-            <p className="text-foreground/60 mb-10">
-              One-time build cost, based on what the site needs to do.
-            </p>
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6 }}
+              className="max-w-xl mb-16"
+            >
+              <p className="text-sm font-medium text-accent mb-4">Pricing</p>
+              <h2 className="font-display text-3xl sm:text-4xl tracking-tight">
+                What it actually costs.
+              </h2>
+            </motion.div>
 
-            <div className="divide-y divide-border border-y border-border">
-              {factors.map((f, i) => (
-                <motion.div
-                  key={f.label}
-                  initial={{ opacity: 0, x: -12 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="flex items-center justify-between gap-6 py-5"
-                >
-                  <div>
-                    <p className="font-medium">{f.label}</p>
-                    <p className="text-sm text-foreground/55">{f.detail}</p>
-                  </div>
-                  <p className="font-mono text-sm text-foreground/70 shrink-0">
-                    {f.range}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="font-display text-5xl sm:text-6xl tracking-tight mb-2">
+                $800<span className="text-foreground/40 mx-2">-</span>$2,800
+              </p>
+              <p className="text-foreground/60 mb-10">
+                One-time build cost, based on what the site needs to do.
+              </p>
+
+              <div className="divide-y divide-border border-y border-border">
+                {factors.map((f, i) => (
+                  <motion.div
+                    key={f.label}
+                    initial={{ opacity: 0, x: -12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.4, delay: i * 0.08 }}
+                    className="flex items-center justify-between gap-6 py-5"
+                  >
+                    <div>
+                      <p className="font-medium">{f.label}</p>
+                      <p className="text-sm text-foreground/55">{f.detail}</p>
+                    </div>
+                    <p className="font-mono text-sm text-foreground/70 shrink-0">
+                      {f.range}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
