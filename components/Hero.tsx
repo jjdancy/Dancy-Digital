@@ -83,9 +83,9 @@ export default function Hero() {
           {...enter(0.18)}
           className="mt-8 max-w-xl text-lg text-foreground/70 leading-relaxed"
         >
-          Two people. Real client work. We use AI to move faster on design
-          and build, so your site launches in weeks, not months, without
-          cutting the corners that make it look cheap.
+          Two people. Real client work. No account managers or handoffs, so
+          your site launches in weeks, not months, without cutting the
+          corners that make it look cheap.
         </motion.p>
 
         <motion.div {...enter(0.28)} className="mt-10 flex flex-wrap items-center gap-4">
