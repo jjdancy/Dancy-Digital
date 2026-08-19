@@ -22,9 +22,6 @@ export default function About() {
             </h2>
 
             <div className="border-l-2 border-accent/40 pl-5 mb-10">
-              <p className="font-display text-lg mb-2">
-                Jovon Dancy &amp; Gordon Gill
-              </p>
               <p className="text-foreground/70 leading-relaxed">
                 Two developers who wanted to use what they know to help
                 small businesses get a real website, without agency prices
