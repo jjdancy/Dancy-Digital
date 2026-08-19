@@ -9,6 +9,9 @@
   --accent-ink: #ffffff;
   --muted: #6b6558;
   --border: #e5e0d5;
+  /* A barely-there warm tint. Used for full-width bands that need to separate
+     from the page without going all the way to the dark surface. */
+  --surface-tint: color-mix(in srgb, var(--accent) 4%, var(--background));
 }
 
 @theme inline {
@@ -16,6 +19,7 @@
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
   --color-surface-dark: var(--surface-dark);
+  --color-surface-tint: var(--surface-tint);
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
   --color-muted: var(--muted);
@@ -177,6 +181,27 @@ body.lqd-cursor-active [contenteditable="true"] {
   transform: translateY(0) scale(0.98);
 }
 
+/* Pinned-card tilt. Cards rest at a slight angle and straighten under the
+   pointer, so a wall of them reads as pinned up rather than laid out on a
+   grid. `--tilt` is set per card and `--drop` staggers alternate columns;
+   both have to live in the one transform, hence the custom properties. */
+.tilt-card {
+  --tilt: 0deg;
+  --drop: 0px;
+  transform: translateY(var(--drop)) rotate(var(--tilt));
+  transition:
+    transform var(--dur-base) var(--ease-out-quint),
+    box-shadow var(--dur-base) var(--ease-out-quint);
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .tilt-card:hover {
+    transform: translateY(calc(var(--drop) - 10px)) rotate(0deg);
+    box-shadow: 0 30px 60px -32px rgb(20 18 15 / 0.42);
+  }
+}
+
 /* ---------------------------------------------------------------------------
    Reduced motion
    --------------------------------------------------------------------------- */
@@ -196,5 +221,11 @@ body.lqd-cursor-active [contenteditable="true"] {
   .zoom-frame:hover img,
   .group:hover .zoom-frame img {
     transform: none;
+  }
+
+  /* Not `none`: that would flatten the resting tilt too, which is layout
+     rather than motion. Only the hover response is dropped. */
+  .tilt-card:hover {
+    transform: translateY(var(--drop)) rotate(var(--tilt));
   }
 }

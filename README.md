@@ -29,9 +29,11 @@ app/
   api/contact/route.ts  Serverless function backing the contact form
 components/
   Header.tsx, Hero.tsx, Problem.tsx, Process.tsx,
-  Portfolio.tsx, Pricing.tsx, About.tsx, ContactForm.tsx, Footer.tsx
+  Portfolio.tsx, Testimonials.tsx, Pricing.tsx, About.tsx,
+  ContactForm.tsx, Footer.tsx
 lib/
   portfolio.ts         Real client project data (name, URL, copy, tags)
+  testimonials.ts      Real client testimonials, joined to projects by slug
 ```
 
 ## Before launch - placeholders to replace
@@ -53,7 +55,18 @@ All five projects in `lib/portfolio.ts` are real, live client sites with verifie
 - LAB University Academy - https://labuniversityprep.com
 - Flow Cooler - https://flow-cooler.vercel.app
 
-No invented stats or testimonials are used anywhere on the site.
+No invented stats are used anywhere on the site.
+
+## Testimonials
+
+`lib/testimonials.ts` holds four real client testimonials, stored verbatim - nothing trimmed or
+paraphrased. Each one carries a `slug` that matches a project in `lib/portfolio.ts`, which is where
+the card gets its industry label, live URL and screenshot from, so a testimonial never restates
+data that already lives with the project.
+
+To add one, append an entry with the client's words and a matching project slug. A testimonial
+whose slug has no matching project still renders - it just loses its thumbnail and its link to the
+case study.
 
 ## Portfolio screenshots
 
