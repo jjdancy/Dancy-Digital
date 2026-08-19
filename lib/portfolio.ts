@@ -15,6 +15,12 @@ export type Project = {
   featured?: boolean;
   /** Path under /public, e.g. "/portfolio/vynl.jpg". Falls back to a text placeholder if omitted. */
   image?: string;
+  /**
+   * The client's own logo, under /public/logos. Shown contained rather than
+   * cropped, since these are wordmarks and crests of different proportions
+   * and a square crop would cut half of them in half.
+   */
+  logo?: string;
 
   // The fields below are used only by the case study page at /work/[slug].
   // Everything in them restates what the project actually shipped — there are
@@ -43,6 +49,7 @@ export const projects: Project[] = [
     tags: ["Next.js", "Booking system", "E-commerce", "Waitlist"],
     featured: true,
     image: "/portfolio/vynl.jpg",
+    logo: "/logos/vynl.png",
     overview:
       "Vynl is a nail studio running three businesses at once: the studio itself, a retail line, and a training academy about to launch. All three were being handled out of one Instagram inbox. Bookings came in as DMs, got written into a paper calendar, and anything the studio wanted to sell had to be arranged message by message. The work coming out of the studio was detailed and deliberate, and the website in front of it was not.",
     features: [
@@ -113,6 +120,7 @@ export const projects: Project[] = [
     why: "Proof we can build past a brochure site into an actual product.",
     tags: ["Next.js", "Platform", "Structured data"],
     image: "/portfolio/pro-scout-australia.jpg",
+    logo: "/logos/pro-scout-australia.jpg",
     overview:
       "Australian athletes and the recruiters looking for them had no common ground built for how recruiting actually works there. The tools that existed were built elsewhere, for other pathways and other calendars, and the mismatch showed. This one is not a brochure site with a contact form bolted on — it is a product, and it had to be structured like one from the first page.",
     features: [
@@ -148,6 +156,7 @@ export const projects: Project[] = [
     why: "Parents research schools online before they ever pick up the phone. This site gives them a reason to keep reading instead of clicking away.",
     tags: ["Next.js", "Education", "Content structure"],
     image: "/portfolio/lab-university-academy.jpg",
+    logo: "/logos/lab-university-academy.png",
     overview:
       "A school site has to hold two audiences at once. A parent deciding where to send their child is doing careful, sceptical research, often late at night, and wants specifics. The institution itself needs to read as credible and established to everyone else who lands there. Those two jobs pull in different directions, and the structure had to carry both without the site turning into a brochure for one and a wall of text for the other.",
     features: [
@@ -183,6 +192,7 @@ export const projects: Project[] = [
     why: "The whole build is one page: photography, specs, and a checkout, nothing else competing for attention.",
     tags: ["Next.js", "E-commerce", "Product page"],
     image: "/portfolio/flow-cooler.jpg",
+    logo: "/logos/flow-cooler.png",
     overview:
       "A physical product with demand already behind it and nowhere online to buy it. Selling one product is a different problem from running a catalogue: there is no browsing to support, no categories to organise, nothing to cross-sell. Every element on the page either helps someone decide to buy or is in the way. That constraint set the whole build.",
     features: [

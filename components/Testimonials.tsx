@@ -112,14 +112,21 @@ function Card({ card, index }: { card: TestimonialCard; index: number }) {
             &rdquo;
           </span>
 
-          {card.image ? (
-            <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-border">
+          {/*
+            Contained, not cropped, and on a white plate: the four logos are a
+            wide wordmark, a tall crest and a badge with its own dark
+            background, so a square avatar crop would cut half of them apart.
+            The name is right beside it, so the logo is decorative to a screen
+            reader and carries an empty alt rather than repeating it.
+          */}
+          {card.logo ? (
+            <span className="relative h-11 w-16 shrink-0 overflow-hidden rounded-lg border border-border bg-white p-1.5">
               <Image
-                src={card.image}
+                src={card.logo}
                 alt=""
                 fill
-                sizes="44px"
-                className="object-cover object-top"
+                sizes="64px"
+                className="object-contain"
               />
             </span>
           ) : null}

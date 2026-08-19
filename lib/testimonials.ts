@@ -43,16 +43,16 @@ export const testimonials: Testimonial[] = [
 export type TestimonialCard = Testimonial & {
   industry?: string;
   url?: string;
-  image?: string;
+  logo?: string;
   /** False if the slug has no matching project, in which case the card drops its links. */
   hasProject: boolean;
 };
 
 /**
- * Joins each testimonial to its project so the card can show the real
- * screenshot and link to the case study, without duplicating any of that
- * data here. A testimonial whose slug no longer matches a project still
- * renders — it just loses its thumbnail and links rather than breaking.
+ * Joins each testimonial to its project so the card can show the client's
+ * logo and link to the case study, without duplicating any of that data
+ * here. A testimonial whose slug no longer matches a project still renders
+ * — it just loses its logo and links rather than breaking.
  */
 export function testimonialCards(): TestimonialCard[] {
   return testimonials.map((testimonial) => {
@@ -61,7 +61,7 @@ export function testimonialCards(): TestimonialCard[] {
       ...testimonial,
       industry: project?.industry,
       url: project?.url,
-      image: project?.image,
+      logo: project?.logo,
       hasProject: Boolean(project),
     };
   });

@@ -32,8 +32,11 @@ components/
   Portfolio.tsx, Testimonials.tsx, Pricing.tsx, About.tsx,
   ContactForm.tsx, Footer.tsx
 lib/
-  portfolio.ts         Real client project data (name, URL, copy, tags)
+  portfolio.ts         Real client project data (name, URL, copy, tags, logo)
   testimonials.ts      Real client testimonials, joined to projects by slug
+public/
+  portfolio/           Project screenshots
+  logos/               Client logos, shown on the testimonial cards
 ```
 
 ## Before launch - placeholders to replace
@@ -65,8 +68,26 @@ the card gets its industry label, live URL and screenshot from, so a testimonial
 data that already lives with the project.
 
 To add one, append an entry with the client's words and a matching project slug. A testimonial
-whose slug has no matching project still renders - it just loses its thumbnail and its link to the
+whose slug has no matching project still renders - it just loses its logo and its link to the
 case study.
+
+## Client logos
+
+`public/logos/` holds each client's own logo, pulled from their live site and referenced by the
+`logo` field on a project in `lib/portfolio.ts`. They are shown contained rather than cropped,
+because the four are a wide wordmark, a tall crest and a badge with its own baked-in background -
+a square avatar crop would cut half of them apart.
+
+| File | Taken from |
+| --- | --- |
+| `flow-cooler.png` | `flow-cooler.vercel.app/images/logo-flow-cooler.png` |
+| `pro-scout-australia.jpg` | `proscoutglobal.com/logo.png` (served as JPEG despite the name) |
+| `vynl.png` | `vynl.com.au/icon.png` - Vynl's site sets its wordmark in text, so the icon is the only mark |
+| `lab-university-academy.png` | `labuniversityprep.com/images/logolab.png` |
+
+Each was trimmed to its artwork and capped at 320px on the long edge; the Flow Cooler original was
+a 2.2MB 1024x1536 PNG that was mostly transparent padding. If a client rebrands, drop the new file
+in at the same path - no code changes needed.
 
 ## Portfolio screenshots
 
