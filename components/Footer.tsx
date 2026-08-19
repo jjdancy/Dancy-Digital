@@ -5,7 +5,7 @@ export default function Footer() {
         <p className="font-display text-foreground">
           Dancy<span className="text-accent">.</span>Digital
         </p>
-        <p>Wilson, NC &amp; Charlotte - {new Date().getFullYear()}</p>
+        <p>Wilson &amp; Charlotte, NC - {new Date().getFullYear()}</p>
         <div className="flex items-center gap-4">
           <a
             href="mailto:contact@dancydigital.com"
