@@ -21,7 +21,7 @@ const fraunces = Fraunces({
 
 const title = "Dancy Digital - Websites for small businesses that ship fast";
 const description =
-  "We design and build modern websites for small businesses. Two people, real client work, no template bloat. Based in Wilson, NC and Charlotte.";
+  "We design and build modern websites for small businesses. Two people, real client work, no template bloat. Based in Wilson & Charlotte, NC.";
 const siteUrl = "https://dancy-digital.vercel.app";
 
 export const metadata: Metadata = {

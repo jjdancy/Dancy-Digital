@@ -32,8 +32,9 @@ export default function About() {
             </div>
 
             <p className="text-foreground/70 leading-relaxed">
-              Based in Wilson, NC, working with businesses across the
-              country. Distance isn&apos;t really a limit for what we do.
+              Based in Wilson &amp; Charlotte, NC, working with businesses
+              across the country. Distance isn&apos;t really a limit for
+              what we do.
               If you need a site and you&apos;re ready to talk, reach out.
             </p>
           </motion.div>

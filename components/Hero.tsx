@@ -68,7 +68,7 @@ export default function Hero() {
         className="relative mx-auto max-w-6xl px-6 sm:px-8"
       >
         <motion.p {...enter(0)} className="text-sm font-medium text-accent mb-6">
-          Based in Wilson, NC, serving clients nationwide
+          Based in Wilson &amp; Charlotte, NC, serving clients nationwide
         </motion.p>
 
         <motion.h1
