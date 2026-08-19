@@ -109,6 +109,11 @@ export default function Process() {
           <h2 className="font-display text-3xl sm:text-4xl tracking-tight">
             Five stages. Three weeks. No mystery in between.
           </h2>
+          <p className="mt-5 text-foreground/70 leading-relaxed">
+            That is the usual span, not three weeks of building. Most of the
+            clock is discovery, your feedback, and getting content together,
+            so it lands sooner when those come back quickly.
+          </p>
         </motion.div>
 
         <div className="relative">
