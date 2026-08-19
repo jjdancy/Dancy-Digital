@@ -104,7 +104,7 @@ export const projects: Project[] = [
   {
     slug: "pro-scout-australia",
     name: "Pro Scout Australia",
-    url: "https://pro-scout-australia.vercel.app",
+    url: "https://www.proscoutglobal.com",
     industry: "Sports recruiting platform",
     problem:
       "Athletes and recruiters had no shared platform built for the Australian market. Existing tools were built for other countries and didn't fit how recruiting actually works there.",
