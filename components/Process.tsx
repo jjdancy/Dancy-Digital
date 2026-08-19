@@ -40,7 +40,7 @@ const stages = [
     label: "03",
     title: "Build",
     time: "Week 2",
-    copy: "Real code, built with AI-assisted tooling to move faster without shipping something fragile. This is the same stack we used for every site in our portfolio.",
+    copy: "Real code, not a page builder. Next.js, React and TypeScript, the same stack we used for every site in our portfolio, so nothing here is held together with plugins that break later.",
     visual: (
       <div className="rounded-lg border border-border bg-surface-dark p-4 font-mono text-xs leading-relaxed text-background/80">
         <p><span className="text-accent">export</span> function Hero() {"{"}</p>
