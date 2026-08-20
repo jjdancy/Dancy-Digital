@@ -146,7 +146,7 @@ export const projects: Project[] = [
   },
   {
     slug: "lab-university-academy",
-    name: "LAB University Academy",
+    name: "LAB University Christian Academy",
     url: "https://labuniversityprep.com",
     industry: "Private school",
     problem:

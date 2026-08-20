@@ -55,7 +55,7 @@ All five projects in `lib/portfolio.ts` are real, live client sites with verifie
 - Vynl - https://www.vynl.com.au
 - JC Junk Hauling - https://www.jcjunkhauling.com
 - Pro Scout Australia - https://pro-scout-australia.vercel.app
-- LAB University Academy - https://labuniversityprep.com
+- LAB University Christian Academy - https://labuniversityprep.com
 - Flow Cooler - https://flow-cooler.vercel.app
 
 No invented stats are used anywhere on the site.
