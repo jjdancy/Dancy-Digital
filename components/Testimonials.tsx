@@ -201,8 +201,7 @@ export default function Testimonials() {
             testimonials
           </h2>
           <p className="mx-auto mt-6 max-w-md leading-relaxed text-foreground/65">
-            Four of the five owners we&apos;ve built for, unedited. Every one of
-            their sites is in the portfolio above.
+            Unedited, and every one of these sites is in the portfolio above.
           </p>
         </motion.div>
 
