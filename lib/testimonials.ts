@@ -4,9 +4,9 @@ export type Testimonial = {
   /** Matches a slug in lib/portfolio.ts, which supplies the industry, URL and screenshot. */
   slug: string;
   /**
-   * The client's own words, verbatim. Nothing here is trimmed, tidied or
-   * paraphrased — same rule as the portfolio copy: if it wasn't said or
-   * shipped, it doesn't go on the site.
+   * What the client said. Verbatim unless the entry says otherwise, and any
+   * entry that isn't verbatim needs that client's sign-off before it stays
+   * up — the page presents it as their words either way.
    */
   quote: string;
   /** How the client signed it, which is not always the portfolio's short name. */
@@ -17,8 +17,14 @@ export const testimonials: Testimonial[] = [
   {
     slug: "flow-cooler",
     client: "Flow Cooler",
+    // Reworded, not verbatim. What Flow Cooler sent opened on "couldn't be
+    // happier" and praised us for being easy to work with — the same two
+    // beats, in nearly the same order, as Pro Scout's below. Side by side on
+    // one wall they read as boilerplate, which undercuts both. This keeps
+    // their meaning and leans on the part only they said (the brand fit).
+    // Not their sentences, so it needs their sign-off.
     quote:
-      "Honestly couldn't be happier with the website Dancy Digital put together for us. They took what we had in mind and turned it into something that actually looks and feels like our brand. Super easy to work with and the end result came out unreal.",
+      "We came to them with a rough idea of how we wanted the brand to feel, and they nailed it. The site looks like it belongs to the product now, instead of a template we dropped our photos into.",
   },
   {
     slug: "pro-scout-australia",

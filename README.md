@@ -62,10 +62,15 @@ No invented stats are used anywhere on the site.
 
 ## Testimonials
 
-`lib/testimonials.ts` holds four real client testimonials, stored verbatim - nothing trimmed or
-paraphrased. Each one carries a `slug` that matches a project in `lib/portfolio.ts`, which is where
-the card gets its industry label, live URL and screenshot from, so a testimonial never restates
-data that already lives with the project.
+`lib/testimonials.ts` holds four real client testimonials. Each one carries a `slug` that matches
+a project in `lib/portfolio.ts`, which is where the card gets its industry label, live URL and logo
+from, so a testimonial never restates data that already lives with the project.
+
+Three are the client's words exactly as sent. The Flow Cooler one was reworded: what they sent and
+what Pro Scout sent opened on the same phrase and made the same two points, so on one wall the pair
+read as boilerplate. The meaning is still theirs but the sentences are not, so **it needs Flow
+Cooler's sign-off before it stays up** - the entry is commented to that effect. Anything reworded
+should be marked the same way, since the page presents every quote as the client's own words.
 
 To add one, append an entry with the client's words and a matching project slug. A testimonial
 whose slug has no matching project still renders - it just loses its logo and its link to the
